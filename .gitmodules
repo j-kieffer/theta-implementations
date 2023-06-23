@@ -1,0 +1,3 @@
+[submodule "RiemannTheta"]
+	path = RiemannTheta
+	url = https://github.com/nbruin/RiemannTheta
