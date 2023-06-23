@@ -12,9 +12,15 @@
 # (resp. HKZ-reduced), and the coefficient tau_{0,0} belongs to the usual
 # fundamental domain in genus 1.
 
-gmax = 12
+gmax = 3
 RR = RealDoubleField()
 
+#Clean old input if present
+for f in os.listdir("input"):
+    if "placeholder" not in f:
+        os.remove("input/"+f)
+
+#Generate new input
 for g in range(1, gmax+1):
     # Generate precisions
     pmin = 32
