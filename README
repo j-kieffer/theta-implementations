@@ -1,4 +1,8 @@
 Work in progress
 
-Installation:
+Installation of RiemannTheta:
 sage --pip install RiemannTheta
+
+Installation of abelfunctions:
+Silence SAGE_ROOT = ... in setup.py
+sage --pip install abelfunctions
