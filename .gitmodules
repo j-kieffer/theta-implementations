@@ -4,3 +4,6 @@
 [submodule "abelfunctions"]
 	path = abelfunctions
 	url = https://github.com/abelfunctions/abelfunctions
+[submodule "Theta.jl"]
+	path = Theta.jl
+	url = https://github.com/chualynn/Theta.jl
