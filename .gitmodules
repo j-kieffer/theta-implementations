@@ -1,3 +1,6 @@
 [submodule "RiemannTheta"]
 	path = RiemannTheta
 	url = https://github.com/nbruin/RiemannTheta
+[submodule "abelfunctions"]
+	path = abelfunctions
+	url = https://github.com/abelfunctions/abelfunctions
