@@ -6,3 +6,10 @@ sage --pip install RiemannTheta
 Installation of abelfunctions:
 Silence SAGE_ROOT = ... in setup.py
 sage --pip install abelfunctions
+
+Installation of Theta.jl:
+Install Julia, add .../julia-(version)/bin to PATH
+in Julia:
+import Pkg
+Pkg.add("Theta") (download from Internet repository)
+
