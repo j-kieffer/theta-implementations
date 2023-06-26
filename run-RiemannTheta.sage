@@ -4,6 +4,10 @@
 
 from riemann_theta.riemann_theta import RiemannTheta
 import time
+import cypari2
+
+pari = cypari2.Pari()
+#pari.allocatemem(2^32)
 
 def set_tau(tau, filename):
     g = tau.ncols()
@@ -24,9 +28,9 @@ def run_at_prec(red, p, g):
 
     start = time.perf_counter()
     RT = RiemannTheta(tau)
-    for c in a_list:
-        RT(char=c)
-    t = time.perf_counter() - start        
+    #for c in a_list:
+    RT(char=charspace(0))
+    t = time.perf_counter() - start
     return t
 
 def run_all_precs(red, precs, g):

@@ -41,11 +41,16 @@ function run_at_prec(red, prec, g)
         z[i] = 0
     end
     t = time()
-    for a = 0:(2^g-1)
-        theta(z, M, char=[digits(a, base=2, pad=g), digits(0, base=2, pad=g)])
-    end
+    #for a = 0:(2^g-1)
+    a = 0
+    theta(z, M, char=[digits(a, base=2, pad=g), digits(0, base=2, pad=g)])
+    #end
     return time()-t
 end
+
+# Dry run so that julia can compile everything
+run_at_prec("lll", 64, 1);
+run_at_prec("hkz", 64, 2);
 
 global g = 1
 while true

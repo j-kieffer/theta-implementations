@@ -12,7 +12,7 @@
 # (resp. HKZ-reduced), and the coefficient tau_{0,0} belongs to the usual
 # fundamental domain in genus 1.
 
-gmax = 6
+gmax = 6 # After that, Theta.jl (and others?) blows up.
 RR = RealDoubleField()
 
 #Clean old input if present
@@ -35,11 +35,14 @@ for g in range(1, gmax+1):
         pmin = 64
         pmax = 2^10
         pstep = 64
+    elif (g <= 6):
+        pmin = 64
+        pmax = 128
+        pstep = 64
     else:
         pmin = 64
-        pmax = 64
-        pstep = 1
-    nb = (pmax - pmin)/pstep + 1
+        pmax = 0 #no high-prec computations
+    nb = floor((pmax - pmin)/pstep) + 1
     with open("input/precisions-genus-{}.in".format(g), "w") as f:
         f.write("{}\n".format(nb))
         for p in range(pmin, pmax+1, pstep):

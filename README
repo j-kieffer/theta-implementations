@@ -13,8 +13,9 @@ in Julia:
 import Pkg
 Pkg.add("Theta") (download from Internet repository)
 
+Magma installation: nothing besides the regular software
+
 Making data:
 sage generate-input.sage
-sage run-RiemannTheta.sage
-sage run-abelfunctions.sage
-julia run-Theta.jl
+sage run-all.sage
+sage plot.sage

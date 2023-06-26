@@ -18,15 +18,16 @@ def read_data(filename):
 
 # Plot the low-precision data
 def plot_lowprec(red):
-    packages = ["Theta.jl", "RiemannTheta", "abelfunctions"]
+    packages = ["Theta.jl", "RiemannTheta", "abelfunctions", "magma"]
     for pkg in packages:
         g, t = read_data("output/{}_lowprec_{}.out".format(pkg, red))
+        t = np.log(t + 10^(-3))
         plt.plot(g, t, label = pkg)
         plt.xticks(g)
     plt.grid(color = '0.9')
     plt.legend()
     plt.xlabel("Genus")
-    plt.ylabel("Time (s)")
+    plt.ylabel("Log(Time/1s)")
     plt.title("Low-precision computations")
     plt.savefig("plots/lowprec_{}.png".format(red))
     plt.close()
@@ -36,7 +37,7 @@ plot_lowprec("hkz")
 
 # Plot the high-precision data
 def plot_highprec(g, red):
-    packages = ["RiemannTheta"]
+    packages = ["RiemannTheta", "magma"]
     for pkg in packages:
         p, t = read_data("output/{}-{}-genus-{}.out".format(pkg, red, g))
         plt.plot(p, t, label = pkg)
