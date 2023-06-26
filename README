@@ -13,3 +13,8 @@ in Julia:
 import Pkg
 Pkg.add("Theta") (download from Internet repository)
 
+Making data:
+sage generate-input.sage
+sage run-RiemannTheta.sage
+sage run-abelfunctions.sage
+julia run-Theta.jl

@@ -12,7 +12,7 @@
 # (resp. HKZ-reduced), and the coefficient tau_{0,0} belongs to the usual
 # fundamental domain in genus 1.
 
-gmax = 3
+gmax = 6
 RR = RealDoubleField()
 
 #Clean old input if present
@@ -23,17 +23,36 @@ for f in os.listdir("input"):
 #Generate new input
 for g in range(1, gmax+1):
     # Generate precisions
-    pmin = 32
-    pmax = 2^10
-    pstep = 32
+    if (g == 1):
+        pmin = 64
+        pmax = 2^12
+        pstep = 256
+    elif (g == 2):
+        pmin = 64
+        pmax = 2^11
+        pstep = 64
+    elif (g == 3):
+        pmin = 64
+        pmax = 2^10
+        pstep = 64
+    else:
+        pmin = 64
+        pmax = 64
+        pstep = 1
     nb = (pmax - pmin)/pstep + 1
     with open("input/precisions-genus-{}.in".format(g), "w") as f:
         f.write("{}\n".format(nb))
         for p in range(pmin, pmax+1, pstep):
             f.write("{}\n".format(p))
 
+#Generate matrices
+for g in range(1, gmax+1):
     # Generate random real part
     re = Matrix(RR, g, g, lambda i,j: random() - 0.5)
+    # Ensure that re is symmetric
+    for i in range(g):
+        for j in range(i):
+            re[i,j] = re[j,i]
     
     # In the HKZ case, take the generating matrix to be the identity except for
     # the last vector constructed following Lagarias, Lenstra, Schnorr,
@@ -70,9 +89,10 @@ for g in range(1, gmax+1):
             im[i,j] = mu[i,j]
     for j in range(1,g):
         c = sqrt(delta - mu[j-1,j]^2)
-        for k in range(j,g):
+        for k in range(g):
             for l in range(j,g):
                 im[k,l] *= c
+    im = im.transpose() * im
     # Ensure that im is exactly symmetric
     for i in range(g):
         for j in range(i):

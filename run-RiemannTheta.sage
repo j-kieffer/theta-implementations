@@ -34,7 +34,7 @@ def run_all_precs(red, precs, g):
         for p in precs:
             res = run_at_prec(red, p, g)
             f.write("{}    {}\n".format(p, res))
-
+        
 g = 1
 while True:
     try:
@@ -42,7 +42,17 @@ while True:
             print("g = {}...".format(g))
             precs = [ZZ(p) for p in f.readlines()[1:]]
             run_all_precs("lll", precs, g)
-            run_all_precs("hkz", precs, g)            
+            run_all_precs("hkz", precs, g)
         g += 1
     except FileNotFoundError:
         break
+
+gmax = g-1
+with open("output/RiemannTheta_lowprec_hkz.out", 'w') as f_hkz:
+    with open("output/RiemannTheta_lowprec_lll.out", 'w') as f_lll:
+        for g in [1..gmax]:
+            t = run_at_prec("hkz", 64, g)
+            f_hkz.write("{}    {}\n".format(g, t))
+            t = run_at_prec("lll", 64, g)
+            f_lll.write("{}    {}\n".format(g, t))
+                         
