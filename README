@@ -15,6 +15,12 @@ Pkg.add("Theta") (download from Internet repository)
 
 Magma installation: nothing besides the regular software
 
+Flint installation:
+cd flint2
+./configure [options]
+make check
+make install
+
 Making data:
 sage generate-input.sage
 sage run-all.sage

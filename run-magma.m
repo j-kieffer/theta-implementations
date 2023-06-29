@@ -19,10 +19,21 @@ function run_at_prec(red, p, g)
     tau := set_tau(CC, input, g);
     z := ZeroMatrix(CC, g, 1);
     char := ZeroMatrix(Integers(), 2*g, 1);
-    
-    t0 := Cputime();
-    _ := Theta(char, z, tau);
-    return Cputime(t0);
+
+    // Magma's timer is imprecise for small amounts.
+    nb_tries := 1;
+    total := 0;
+    t := 0;
+    while (total lt 0.05) do
+        t0 := Cputime();
+        for k := 1 to nb_tries do
+            _ := Theta(char, z, tau);
+        end for;
+        total := Cputime(t0);
+        t := total/nb_tries;
+        nb_tries *:= 10;
+    end while;
+    return t;
 end function;
 
 function run_all_precs(red, precs, g)
