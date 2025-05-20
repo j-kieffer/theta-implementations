@@ -14,6 +14,8 @@ if 1:
     pkg.append("magma")
 if 1:
     pkg.append("Theta.jl")
+if 1:
+    pkg.append("FLINT")
 
 def run(p):
     print("Running experiments for {}: ".format(p))
@@ -23,6 +25,8 @@ def run(p):
         subprocess.run(["julia", "run-Theta.jl"])
     if p == "magma":
         subprocess.run(["magma", "run-magma.m"])
+    if p == "FLINT":
+        load("run-flint.sage")
 
 for p in pkg:
     run(p)

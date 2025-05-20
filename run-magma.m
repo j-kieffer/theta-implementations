@@ -1,3 +1,6 @@
+//
+// Run experiments using Magma's Theta instrinsic
+//
 
 function set_tau(CC, filename, g)
     I := CC.1;
