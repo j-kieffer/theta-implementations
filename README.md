@@ -15,15 +15,15 @@ the following software:
 
 We do not experiment with the
 [abelfunctions](https://github.com/abelfunctions/abelfunctions/tree/master)
-package. We refer to the paper [Computing Theta Functions with
+package: see the paper [Computing Theta Functions with
 Julia](https://msp.org/jsag/2021/11-1/p05.xhtml) for experimental comparisons
-between Theta.jl and abelfunctions. We also thank Christian Klein for sharing
-with us the Matlab code associated to the paper [Efficient computation of
+between Theta.jl and abelfunctions. We thank Christian Klein for sharing with
+us the Matlab code associated to the paper [Efficient computation of
 multidimensional theta
 functions](https://www.sciencedirect.com/science/article/pii/S0393044019300555),
 which is not included here.
 
-We run two kinds of experiments:
+We run two kinds of experiments with the above software packages:
 
 - First, we fix a small precision of 64 bits, let the dimension $g$ vary from 1
   to 6, and measure how much time it takes to evaluate $\theta_{0,0}(0,\tau)$
@@ -46,16 +46,18 @@ We run two kinds of experiments:
 - Installing Magma: just make sure that you have a working `magma` command
   in your system. The experiments in the paper were run with Magma v2.27-7.
 
-- Installing RiemannTheta: refer to the [installation
+- Installing RiemannTheta: first make sure that you have a working (and recent)
+  `sage` command in your system, then refer to these [installation
   instructions](https://github.com/nbruin/RiemannTheta/tree/main#installation). It
-  is possible to download the exact same version of the package that we used in
-  experiments. To do this, clone this repository, then run
+  is possible to use the [precise version of the
+  package](https://github.com/nbruin/RiemannTheta/tree/46835dc283fb99661f326ecd0727c9818272b5fd)
+  that we used in the paper (v1.0.0). To do this, clone this repository, run
 
       git submodule update --init RiemannTheta
       cd RiemannTheta
       sage --python setup.py install --user
 
-  to install this precise version of the user package.
+  and make sure `sage` is aware of were to find user-installed packages.
 
 - Installing FLINT: clone this repository, run
 
@@ -85,7 +87,7 @@ The command
     sage run-all.sage
 
 actually performs the computations. It is easy to modify `run-all.sage` to omit
-packages (e.g. Magma) if they are not installed. It is possible to restart
+packages (e.g. Magma) if they are not installed. It is also possible to restart
 experiments from scratch with a single software package using `julia
 run-Theta.jl`, `magma run-magma.m` or `sage run-flint.sage` independently.
 

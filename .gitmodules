@@ -1,6 +1,3 @@
 [submodule "RiemannTheta"]
 	path = RiemannTheta
 	url = https://github.com/nbruin/RiemannTheta
-[submodule "flint"]
-	path = flint
-	url = https://github.com/flintlib/flint
