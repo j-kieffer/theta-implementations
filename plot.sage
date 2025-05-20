@@ -14,13 +14,13 @@ def read_data(filename):
             assert len(data) == 2
             x[i] = int(data[0])
             y[i] = float(data[1])
-    return x, y            
+    return x, y
 
 # Plot the low-precision data
-def plot_lowprec(red):
-    packages = ["Theta.jl", "RiemannTheta", "abelfunctions", "magma"]
+def plot_lowprec():
+    packages = ["Theta.jl", "RiemannTheta", "magma"]
     for pkg in packages:
-        g, t = read_data("output/{}_lowprec_{}.out".format(pkg, red))
+        g, t = read_data("output/{}_lowprec.out".format(pkg))
         t = np.log(t + 10^(-3))
         plt.plot(g, t, label = pkg)
         plt.xticks(g)
@@ -29,31 +29,29 @@ def plot_lowprec(red):
     plt.xlabel("Genus")
     plt.ylabel("Log(Time/1s)")
     plt.title("Low-precision computations")
-    plt.savefig("plots/lowprec_{}.png".format(red))
+    plt.savefig("plots/lowprec.png")
     plt.close()
 
-plot_lowprec("lll")
-plot_lowprec("hkz")
+plot_lowprec()
 
 # Plot the high-precision data
-def plot_highprec(g, red):
+def plot_highprec(g):
     packages = ["RiemannTheta", "magma"]
     for pkg in packages:
-        p, t = read_data("output/{}-{}-genus-{}.out".format(pkg, red, g))
+        p, t = read_data("output/{}-genus-{}.out".format(pkg, g))
         plt.plot(p, t, label = pkg)
     plt.grid(color = '0.9')
     plt.legend()
     plt.xlabel("Precision")
     plt.ylabel("Time (s)")
     plt.title("High-precision computations in genus {}".format(g))
-    plt.savefig("plots/highprec-{}-genus-{}.png".format(red, g))
-    plt.close()        
+    plt.savefig("plots/highprec-genus-{}.png".format(g))
+    plt.close()
 
 g = 1
 while True:
     try:
-       plot_highprec(g, "lll")
-       plot_highprec(g, "hkz")
+       plot_highprec(g)
        g += 1
     except FileNotFoundError:
         break
