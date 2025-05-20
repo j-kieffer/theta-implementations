@@ -7,6 +7,6 @@
 [submodule "Theta.jl"]
 	path = Theta.jl
 	url = https://github.com/chualynn/Theta.jl
-[submodule "flint2"]
-	path = flint2
-	url = git@github.com:j-kieffer/flint2.git
+[submodule "flint"]
+	path = flint
+	url = https://github.com/flintlib/flint
