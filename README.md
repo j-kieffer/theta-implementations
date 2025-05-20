@@ -1,3 +1,6 @@
+theta-implementations: Experimenting with different software packages computing theta functions
+=========================
+
 Work in progress
 
 Installation of RiemannTheta:
