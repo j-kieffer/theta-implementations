@@ -1,9 +1,9 @@
-theta-implementations: Experimenting with software packages for theta functions
+Theta-implementations: Experimenting with software packages for theta functions
 =========================
 
 This repository contains code to reproduce experiments from the paper [Fast
-evaluation of Riemann theta functions in any dimension]() by Noam D. Elkies and
-Jean Kieffer. We experiment with the following software:
+evaluation of Riemann theta functions in any dimension](). We experiment with
+the following software:
 
 - The Julia package [Theta.jl](https://github.com/chualynn/Theta.jl).
 - Magma's [Theta](https://magma.maths.usyd.edu.au/magma/handbook/text/260) intrinsic.
@@ -13,40 +13,79 @@ Jean Kieffer. We experiment with the following software:
 - The fast algorithm implemented in [FLINT](https://github.com/flintlib/flint)
   as `acb_theta_jet_notransform`.
 
+We do not experiment with the
+[abelfunctions](https://github.com/abelfunctions/abelfunctions/tree/master)
+package. We refer to the paper [Computing Theta Functions with
+Julia](https://msp.org/jsag/2021/11-1/p05.xhtml) for experimental comparisons
+between Theta.jl and abelfunctions. We also thank Christian Klein for sharing
+with us the Matlab code associated to the paper [Efficient computation of
+multidimensional theta
+functions](https://www.sciencedirect.com/science/article/pii/S0393044019300555),
+which is not included here.
+
 We run two kinds of experiments:
+
 - First, we fix a small precision of 64 bits, let the dimension $g$ vary from 1
   to 6, and measure how much time it takes to evaluate $\theta_{0,0}(0,\tau)$
-  where $\tau$ is a representative element of the Siegel half space in
+  where $\tau$ is a representative reduced element of Siegel half space in
   dimension $g$.
 - Second, we fix $1\leq g\leq 6$, and measure how much time it takes to
-  evaluate $\theta_{0,0}(0,\tau)$ at growing binary precisions.
+  evaluate $\theta_{0,0}(0,\tau)$ at growing binary precisions. In this
+  setting, we do not consider Theta.jl which only supports small precision.
 
 ## Building packages
 
+- Installation of Theta.jl: first, [install Julia](https://julialang.org/install/), then run
 
+      import Pkg
+      Pkg.add("Theta")
 
-Installation of RiemannTheta:
-sage --pip install RiemannTheta
+  These commands will install the latest version of Theta.jl. The experiments
+  in the paper were run with Theta.jl 0.1.2.
 
-Installation of abelfunctions:
-Silence SAGE_ROOT = ... in setup.py
-sage --pip install abelfunctions
+- Installation of Magma: just make sure that you have a working `magma` command
+  in your system. The experiments in the paper were run with Magma v2.27-7.
 
-Installation of Theta.jl:
-Install Julia, add .../julia-(version)/bin to PATH
-in Julia:
-import Pkg
-Pkg.add("Theta") (download from Internet repository)
+- Installation of RiemannTheta: refer to the [installation
+  instructions](https://github.com/nbruin/RiemannTheta/tree/main#installation). It
+  is possible to download the exact same version of the package that we used in
+  experiments. To do this, clone this repository, then run
 
-Magma installation: nothing besides the regular software
+      git submodule update --init RiemannTheta
+      cd RiemannTheta
+      sage --python setup.py install --user
 
-Flint installation:
-cd flint2
-./configure [options]
-make check
-make install
+  to install this precise version of the user package.
 
-Making data:
-sage generate-input.sage
-sage run-all.sage
-sage plot.sage
+- installation of FLINT: clone this repository, run
+
+      git submodule update --init flint
+      cd flint
+
+  then [build FLINT from
+  source](https://github.com/flintlib/flint?tab=readme-ov-file#building-from-source). Then,
+  compile the C file `run-flint.c` as follows:
+
+      gcc -I/path/to/include/flint run-flint.c -L/path/to/lib -lflint -o run-flint.exe
+
+## Generating input data
+
+Run
+
+    sage generate_input.sage
+
+The file `generate_input.sage` specifies which precisions will be considered in
+each genus and the shape of the matrix `\tau`.
+
+## Running experiments
+
+Run
+
+    sage run-all.sage
+
+It is easy to modify `run-all.sage` to omit packages (e.g. Magma) if they are
+not installed.
+
+The results are placed in the folder `output` as several files with
+self-explanatory names. Each file contains two columns expressing runtimes (in
+seconds) in terms of $g$ or of the chosen binary precision.
