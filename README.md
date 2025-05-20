@@ -78,7 +78,7 @@ To generate input data, run
     sage generate_input.sage
 
 The file `generate_input.sage` specifies which precisions will be considered in
-each genus and the shape of the matrix `\tau`.
+each genus and the shape of the matrix $\tau$.
 
 ## Running experiments
 
