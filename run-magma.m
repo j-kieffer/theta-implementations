@@ -13,9 +13,9 @@ function set_tau(CC, filename, g)
     return tau;
 end function;
 
-function run_at_prec(red, p, g)
+function run_at_prec(p, g)
     CC := ComplexField(p: Bits:=true);
-    input := Sprintf("input/%o-genus-%o.in", red, g);
+    input := Sprintf("input/periods-genus-%o.in", g);
     tau := set_tau(CC, input, g);
     z := ZeroMatrix(CC, g, 1);
     char := ZeroMatrix(Integers(), 2*g, 1);
@@ -24,23 +24,24 @@ function run_at_prec(red, p, g)
     nb_tries := 1;
     total := 0;
     t := 0;
-    while (total lt 0.05) do
+    while (total lt 1) do
         t0 := Cputime();
         for k := 1 to nb_tries do
             _ := Theta(char, z, tau);
         end for;
         total := Cputime(t0);
         t := total/nb_tries;
-        nb_tries *:= 10;
+        nb_tries *:= 4;
     end while;
     return t;
 end function;
 
-function run_all_precs(red, precs, g)
-    output := Sprintf("output/magma-%o-genus-%o.out", red, g);
+function run_all_precs(precs, g)
+    output := Sprintf("output/magma-genus-%o.out", g);
     ovw := true;
     for p in precs do
-        r := run_at_prec(red, p, g);
+        printf "    p = %o...\n", p;
+        r := run_at_prec(p, g);
         line := Sprintf("%o    %o", p, r);
         Write(output, line: Overwrite := ovw);
         ovw := false;
@@ -55,8 +56,7 @@ while true do
         lines := Split(Read(input));
         printf "g = %o...\n", g;
         precs := [StringToInteger(x): x in lines[2..(#lines)]];
-        _ := run_all_precs("lll", precs, g);
-        _ := run_all_precs("hkz", precs, g);
+        _ := run_all_precs(precs, g);
         g +:= 1;
     catch e
         break;
@@ -64,17 +64,13 @@ while true do
 end while;
 
 gmax := g-1;
-output_hkz := "output/magma_lowprec_lll.out";
-output_lll := "output/magma_lowprec_hkz.out";
+output := "output/magma_lowprec.out";
 ovw := true;
 for g := 1 to gmax do
-    t := run_at_prec("lll", 64, g);
+    t := run_at_prec(64, g);
     line := Sprintf("%o    %o", g, t);
-    Write(output_lll, line: Overwrite := ovw);
-    t := run_at_prec("hkz", 64, g);
-    line := Sprintf("%o    %o", g, t);
-    Write(output_hkz, line: Overwrite := ovw);
+    Write(output, line: Overwrite := ovw);
     ovw := false;
 end for;
-    
+
 exit;

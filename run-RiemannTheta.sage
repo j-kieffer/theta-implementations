@@ -18,45 +18,47 @@ def set_tau(tau, filename):
             for j in range(g):
                 tau[i,j] = CC(lines[2*i*g+2*j]) + CC(lines[2*i*g+2*j+1])*I
 
-def run_at_prec(red, p, g):
+def run_at_prec(p, g):
     CC = ComplexField(p)
     tau = Matrix(CC, g, g)
-    set_tau(tau, "input/{}-genus-{}.in".format(red, g))
+    set_tau(tau, "input/periods-genus-{}.in".format(g))
     charspace = GF(2)^(2*g)
     a_list = [charspace.gens()[i] for i in [0..g-1]]
     a_list = [charspace(a) for a in span(a_list)]
 
-    start = time.perf_counter()
-    RT = RiemannTheta(tau)
-    #for c in a_list:
-    RT(char=charspace(0))
-    t = time.perf_counter() - start
+    total = 0.
+    t = 0.
+    nbtries = 1
+    while total < 1:
+        start = time.perf_counter()
+        for k in range(nbtries):
+            RT = RiemannTheta(tau)
+            _ = RT(char=charspace(0))
+        total = time.perf_counter() - start
+        t = total/nbtries
+        nbtries *= 4
     return t
 
-def run_all_precs(red, precs, g):
-    with open("output/RiemannTheta-{}-genus-{}.out".format(red, g), 'w') as f:
+def run_all_precs(precs, g):
+    with open("output/RiemannTheta-genus-{}.out".format(g), 'w') as f:
         for p in precs:
-            res = run_at_prec(red, p, g)
+            print("    p = {}...".format(p))
+            res = run_at_prec(p, g)
             f.write("{}    {}\n".format(p, res))
-        
+
 g = 1
 while True:
     try:
         with open("input/precisions-genus-{}.in".format(g), 'r') as f:
             print("g = {}...".format(g))
             precs = [ZZ(p) for p in f.readlines()[1:]]
-            run_all_precs("lll", precs, g)
-            run_all_precs("hkz", precs, g)
+            run_all_precs(precs, g)
         g += 1
     except FileNotFoundError:
         break
 
 gmax = g-1
-with open("output/RiemannTheta_lowprec_hkz.out", 'w') as f_hkz:
-    with open("output/RiemannTheta_lowprec_lll.out", 'w') as f_lll:
-        for g in [1..gmax]:
-            t = run_at_prec("hkz", 64, g)
-            f_hkz.write("{}    {}\n".format(g, t))
-            t = run_at_prec("lll", 64, g)
-            f_lll.write("{}    {}\n".format(g, t))
-                         
+with open("output/RiemannTheta_lowprec.out", 'w') as f:
+    for g in [1..gmax]:
+        t = run_at_prec(64, g)
+        f.write("{}    {}\n".format(g, t))

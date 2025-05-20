@@ -14,15 +14,11 @@ if 1:
     pkg.append("magma")
 if 1:
     pkg.append("Theta.jl")
-if 1:
-    pkg.append("abelfunctions")
 
 def run(p):
     print("Running experiments for {}: ".format(p))
     if p == "RiemannTheta":
         load("run-RiemannTheta.sage")
-    if p == "abelfunctions":
-        load("run-abelfunctions.sage")
     if p == "Theta.jl":
         subprocess.run(["julia", "run-Theta.jl"])
     if p == "magma":
