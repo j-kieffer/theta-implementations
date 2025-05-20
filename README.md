@@ -35,18 +35,18 @@ We run two kinds of experiments:
 
 ## Building packages
 
-- Installation of Theta.jl: first, [install Julia](https://julialang.org/install/), then run
+- Installing Theta.jl: first [install Julia](https://julialang.org/install/). Then run
 
       import Pkg
       Pkg.add("Theta")
 
   These commands will install the latest version of Theta.jl. The experiments
-  in the paper were run with Theta.jl 0.1.2.
+  in the paper were run with Theta.jl v0.1.2.
 
-- Installation of Magma: just make sure that you have a working `magma` command
+- Installing Magma: just make sure that you have a working `magma` command
   in your system. The experiments in the paper were run with Magma v2.27-7.
 
-- Installation of RiemannTheta: refer to the [installation
+- Installing RiemannTheta: refer to the [installation
   instructions](https://github.com/nbruin/RiemannTheta/tree/main#installation). It
   is possible to download the exact same version of the package that we used in
   experiments. To do this, clone this repository, then run
@@ -57,20 +57,21 @@ We run two kinds of experiments:
 
   to install this precise version of the user package.
 
-- installation of FLINT: clone this repository, run
+- Installing FLINT: clone this repository, run
 
       git submodule update --init flint
       cd flint
 
-  then [build FLINT from
-  source](https://github.com/flintlib/flint?tab=readme-ov-file#building-from-source). Then,
-  compile the C file `run-flint.c` as follows:
+  then [build and install FLINT from
+  source](https://github.com/flintlib/flint?tab=readme-ov-file#building-from-source)
+  in that repository. Finally, compile the C file `run-flint.c` to produce
+  `run-flint.exe` using something like
 
       gcc -I/path/to/include/flint run-flint.c -L/path/to/lib -lflint -o run-flint.exe
 
 ## Generating input data
 
-Run
+To generate input data, run
 
     sage generate_input.sage
 
@@ -79,12 +80,14 @@ each genus and the shape of the matrix `\tau`.
 
 ## Running experiments
 
-Run
+The command
 
     sage run-all.sage
 
-It is easy to modify `run-all.sage` to omit packages (e.g. Magma) if they are
-not installed.
+actually performs the computations. It is easy to modify `run-all.sage` to omit
+packages (e.g. Magma) if they are not installed. It is possible to restart
+experiments from scratch with a single software package using `julia
+run-Theta.jl`, `magma run-magma.m` or `sage run-flint.sage` independently.
 
 The results are placed in the folder `output` as several files with
 self-explanatory names. Each file contains two columns expressing runtimes (in
