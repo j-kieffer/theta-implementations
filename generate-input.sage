@@ -21,7 +21,7 @@ for f in os.listdir("input"):
 
 # Generate precisions
 pmin = 64
-pmax = 2^20
+pmax = 2^22
 with open("input/precisions.in", "w") as f:
     p = pmin
     while p <= pmax:

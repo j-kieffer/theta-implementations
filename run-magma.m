@@ -46,10 +46,10 @@ function run_all_precs(precs, g)
         printf "    p = %o...\n", p;
         r := run_at_prec(p, g);
         line := Sprintf("%o    %.9o", p, r);
-        if r gt 10 then
-            return false;
-        end if;
         Write(output, line: Overwrite := ovw);
+        if r gt 10 then
+            return p;
+        end if;
         ovw := false;
     end for;
     return true;
@@ -62,24 +62,14 @@ g := 1;
 while true do
     try
         printf "g = %o...\n", g;
-        _ := run_all_precs(precs, g);
+        p := run_all_precs(precs, g);
         g +:= 1;
+        if p eq 64 then
+            break;
+        end if;
     catch e
         break;
     end try;
 end while;
-
-gmax := g-1;
-output := "output/magma_lowprec.out";
-ovw := true;
-for g := 1 to gmax do
-    t := run_at_prec(64, g);
-    line := Sprintf("%o    %.9o", g, t);
-    if t gt 10 then
-        break;
-    end if;
-    Write(output, line: Overwrite := ovw);
-    ovw := false;
-end for;
 
 exit;

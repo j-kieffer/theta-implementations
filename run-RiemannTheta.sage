@@ -7,7 +7,7 @@ import time
 import cypari2
 
 pari = cypari2.Pari()
-#pari.allocatemem(2^32)
+pari.allocatemem(2^32)
 
 def set_tau(tau, filename):
     g = tau.ncols()
@@ -46,7 +46,8 @@ def run_all_precs(precs, g):
             res = run_at_prec(p, g)
             f.write("{}    {}\n".format(p, res))
             if res > 10:
-                break
+                return p
+    return True
 
 with open("input/precisions.in", 'r') as f:
     precs = [ZZ(p) for p in f.readlines()]
@@ -55,15 +56,9 @@ g = 1
 while True:
     try:
         print("g = {}...".format(g))
-        run_all_precs(precs, g)
+        p = run_all_precs(precs, g)
         g += 1
+        if p == 64:
+            break
     except FileNotFoundError:
         break
-
-gmax = g-1
-with open("output/RiemannTheta_lowprec.out", 'w') as f:
-    for g in [1..gmax]:
-        t = run_at_prec(64, g)
-        f.write("{}    {}\n".format(g, t))
-        if t > 10:
-            break

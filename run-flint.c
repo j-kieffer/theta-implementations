@@ -89,7 +89,14 @@ int main(int argc, char * argv[])
     }
     TIMEIT_END_REPEAT(t0, reps);
     t = 0.001 * ((double) t0->cpu) / reps;
-    flint_printf("%f", t);
+    if (acb_is_finite(th))
+    {
+        flint_printf("%f", t);
+    }
+    else
+    {
+        flint_printf("FAIL");
+    }
 
     acb_mat_clear(tau);
     _acb_vec_clear(z, g);
