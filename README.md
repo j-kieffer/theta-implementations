@@ -23,18 +23,11 @@ multidimensional theta
 functions](https://www.sciencedirect.com/science/article/pii/S0393044019300555),
 which is not included here.
 
-We run two kinds of experiments with the above software packages:
-
-- First, we fix a small precision of 64 bits, let the dimension $g$ vary from 1
-  to 10, and measure how much time it takes to evaluate $\theta_{0,0}(0,\tau)$
-  where $\tau$ is a representative reduced element of Siegel half space in
-  dimension $g$.
-- Second, we fix $1\leq g\leq 10$, and measure how much time it takes to
-  evaluate $\theta_{0,0}(0,\tau)$ at growing binary precisions. In this
-  setting, we do not consider Theta.jl which only supports small precision.
-
-If a given task takes more than 10 seconds to run, then more difficult ones are
-not attempted.
+For each dimension $1\leq g\leq 10$, we sample a representative reduced element
+$\tau$ in the Siegel upper half space, and measure how much time it takes to
+evaluate $\theta_{0,0}(0,\tau)$ at growing binary precisions. Note Theta.jl
+only supports low precision. If a given task takes more than 10 seconds to run,
+then more difficult ones are not attempted.
 
 ## Building packages
 
