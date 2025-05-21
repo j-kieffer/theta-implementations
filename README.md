@@ -82,14 +82,14 @@ each genus and the shape of the matrix $\tau$.
 
 ## Running experiments
 
-The command
+The commands
 
-    sage run-all.sage
+    julia run-Theta.jl
+    magma run-magma.m
+    sage run-RiemannTheta.sage
+    sage run-flint.sage
 
-actually performs the computations. It is easy to modify `run-all.sage` to omit
-packages (e.g. Magma) if they are not installed. It is also possible to restart
-experiments from scratch with a single software package using `julia
-run-Theta.jl`, `magma run-magma.m` or `sage run-flint.sage` independently.
+actually perform the computations.
 
 The results are placed in the folder `output` as several files with
 self-explanatory names. Each file contains two columns expressing runtimes (in
