@@ -2,3 +2,4 @@
 *.sage.py
 *.out
 *.png
+.auto/*
