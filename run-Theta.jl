@@ -64,11 +64,13 @@ run_at_prec(64, 2);
 global g = 2
 while true
     try
-        f_in = open("input/precisions-genus-$g.in", "r")
         print("g = $g...\n")
         prec = 64
         local t = run_at_prec(prec, g)
         write(f_out, "$g    $t\n")
+        if t > 10
+            break
+        end
         global g += 1
     catch LoadError
         break

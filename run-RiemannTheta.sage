@@ -45,14 +45,17 @@ def run_all_precs(precs, g):
             print("    p = {}...".format(p))
             res = run_at_prec(p, g)
             f.write("{}    {}\n".format(p, res))
+            if res > 10:
+                break
+
+with open("input/precisions.in", 'r') as f:
+    precs = [ZZ(p) for p in f.readlines()]
 
 g = 1
 while True:
     try:
-        with open("input/precisions-genus-{}.in".format(g), 'r') as f:
-            print("g = {}...".format(g))
-            precs = [ZZ(p) for p in f.readlines()[1:]]
-            run_all_precs(precs, g)
+        print("g = {}...".format(g))
+        run_all_precs(precs, g)
         g += 1
     except FileNotFoundError:
         break
@@ -62,3 +65,5 @@ with open("output/RiemannTheta_lowprec.out", 'w') as f:
     for g in [1..gmax]:
         t = run_at_prec(64, g)
         f.write("{}    {}\n".format(g, t))
+        if t > 10:
+            break

@@ -89,7 +89,7 @@ int main(int argc, char * argv[])
     }
     TIMEIT_END_REPEAT(t0, reps);
     t = 0.001 * ((double) t0->cpu) / reps;
-    flint_printf("%f\n", t);
+    flint_printf("%f", t);
 
     acb_mat_clear(tau);
     _acb_vec_clear(z, g);

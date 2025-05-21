@@ -45,20 +45,23 @@ function run_all_precs(precs, g)
     for p in precs do
         printf "    p = %o...\n", p;
         r := run_at_prec(p, g);
-        line := Sprintf("%o    %o", p, r);
+        line := Sprintf("%o    %.9o", p, r);
+        if r gt 10 then
+            return false;
+        end if;
         Write(output, line: Overwrite := ovw);
         ovw := false;
     end for;
     return true;
 end function;
 
+lines := Split(Read("input/precisions.in"));
+precs := [StringToInteger(x): x in lines];
+
 g := 1;
 while true do
     try
-        input := Sprintf("input/precisions-genus-%o.in", g);
-        lines := Split(Read(input));
         printf "g = %o...\n", g;
-        precs := [StringToInteger(x): x in lines[2..(#lines)]];
         _ := run_all_precs(precs, g);
         g +:= 1;
     catch e
@@ -71,7 +74,10 @@ output := "output/magma_lowprec.out";
 ovw := true;
 for g := 1 to gmax do
     t := run_at_prec(64, g);
-    line := Sprintf("%o    %o", g, t);
+    line := Sprintf("%o    %.9o", g, t);
+    if t gt 10 then
+        break;
+    end if;
     Write(output, line: Overwrite := ovw);
     ovw := false;
 end for;

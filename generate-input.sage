@@ -11,7 +11,7 @@
 # imaginary part of tau is HKZ-reduced, and the coefficient tau_{0,0} belongs
 # to the usual fundamental domain in genus 1.
 
-gmax = 6 # After that, Theta.jl (and others?) blows up.
+gmax = 10
 RR = RealDoubleField()
 
 #Clean old input if present
@@ -19,33 +19,14 @@ for f in os.listdir("input"):
     if "placeholder" not in f:
         os.remove("input/"+f)
 
-#Generate new input
-for g in range(1, gmax+1):
-    # Generate precisions
-    if (g == 1):
-        pmin = 64
-        pmax = 2^12
-        pstep = 256
-    elif (g == 2):
-        pmin = 64
-        pmax = 2^11
-        pstep = 64
-    elif (g == 3):
-        pmin = 64
-        pmax = 2^10
-        pstep = 64
-    elif (g <= 6):
-        pmin = 64
-        pmax = 128
-        pstep = 64
-    else:
-        pmin = 64
-        pmax = 0 #no high-prec computations
-    nb = floor((pmax - pmin)/pstep) + 1
-    with open("input/precisions-genus-{}.in".format(g), "w") as f:
-        f.write("{}\n".format(nb))
-        for p in range(pmin, pmax+1, pstep):
-            f.write("{}\n".format(p))
+# Generate precisions
+pmin = 64
+pmax = 2^20
+with open("input/precisions.in", "w") as f:
+    p = pmin
+    while p <= pmax:
+        f.write("{}\n".format(p))
+        p *= 2
 
 #Generate matrices
 for g in range(1, gmax+1):
