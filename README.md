@@ -26,12 +26,15 @@ which is not included here.
 We run two kinds of experiments with the above software packages:
 
 - First, we fix a small precision of 64 bits, let the dimension $g$ vary from 1
-  to 6, and measure how much time it takes to evaluate $\theta_{0,0}(0,\tau)$
+  to 10, and measure how much time it takes to evaluate $\theta_{0,0}(0,\tau)$
   where $\tau$ is a representative reduced element of Siegel half space in
   dimension $g$.
-- Second, we fix $1\leq g\leq 6$, and measure how much time it takes to
+- Second, we fix $1\leq g\leq 10$, and measure how much time it takes to
   evaluate $\theta_{0,0}(0,\tau)$ at growing binary precisions. In this
   setting, we do not consider Theta.jl which only supports small precision.
+
+If a given task takes more than 10 seconds to run, then more difficult ones are
+not attempted.
 
 ## Building packages
 
@@ -77,8 +80,9 @@ To generate input data, run
 
     sage generate_input.sage
 
-The file `generate_input.sage` specifies which precisions will be considered in
-each genus and the shape of the matrix $\tau$.
+The file `generate_input.sage` specifies which precisions will be considered
+(powers of 2 from 64 to $2^{20}$) and the shape of the matrix $\tau$ in each
+dimension $g$.
 
 ## Running experiments
 
